@@ -22,41 +22,38 @@ public class PlayerController : MonoBehaviour
 
     private void Update() {
         // playerMovement();
-        bodyMovement();
+        // bodyMovement();
+        for(int i = snakeBodies.Count-1; i>0; i--){
+            snakeBodies[i].position = snakeBodies[i-1].position;
+        }
+        currentPosition = transform.position;
+        Debug.Log("Current Position : "+currentPosition);
+        if(playerDirection == PlayerDirection.Right){
+
+            currentPosition.x += movementSpeed + Time.deltaTime;
+
+        }else if(playerDirection == PlayerDirection.Left){
+
+            currentPosition.x -= movementSpeed + Time.deltaTime;
+
+        }else if(playerDirection == PlayerDirection.Up){
+
+            currentPosition.y += movementSpeed + Time.deltaTime;
+
+        }else if(playerDirection == PlayerDirection.Up){
+
+            currentPosition.y -= movementSpeed + Time.deltaTime;
+        }
+        transform.position = currentPosition;
+        Debug.Log("Updated Position : "+transform.position);
     }
 
     void bodyMovement(){
         Debug.Log("Vector2 : "+Vector2.right);
-        int i = snakeBodies.Count-1;
-        for(; i>0; i--){
-            snakeBodies[i].position = snakeBodies[i-1].position;
-        }
-        transform.position = new Vector3(
-            transform.position.x + Vector2.right.x,
-            transform.position.y + Vector2.right.y,
-            0f
-        );
     }
 
     void playerMovement(){
-        currentPosition = transform.position;
-        if(playerDirection == PlayerDirection.Right){
 
-            currentPosition.x += movementSpeed * Time.deltaTime;
-
-        }else if(playerDirection == PlayerDirection.Left){
-
-            currentPosition.x -= movementSpeed * Time.deltaTime;
-
-        }else if(playerDirection == PlayerDirection.Up){
-
-            currentPosition.y += movementSpeed * Time.deltaTime;
-
-        }else if(playerDirection == PlayerDirection.Up){
-
-            currentPosition.y -= movementSpeed * Time.deltaTime;
-
-        }
     }
 
     void Grow(){
